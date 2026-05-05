@@ -1,0 +1,19 @@
+{
+  "name": "poc-company",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "sandcastle": "npx tsx .sandcastle/main.mts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kendyl93/poc-company.git"
+  },
+  "author": "Pawel Stanecki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kendyl93/poc-company/issues"
+  },
+  "homepage": "https://github.com/kendyl93/poc-company#readme",
+  "description": ""
+}
