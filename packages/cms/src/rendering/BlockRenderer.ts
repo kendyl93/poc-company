@@ -6,6 +6,8 @@ type UnknownBlock = {
   [key: string]: unknown;
 };
 
+type BlockInput = CmsLayoutBlock | UnknownBlock;
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -21,18 +23,29 @@ function renderUnknownBlock(block: UnknownBlock): string {
   )}">Unsupported block: ${escapeHtml(block.blockType)}</div>`;
 }
 
+function isKnownBlock(block: BlockInput): block is CmsLayoutBlock {
+  return block.blockType in blockMap;
+}
+
+function renderKnownBlock(block: CmsLayoutBlock): string {
+  switch (block.blockType) {
+    case "hero":
+      return blockMap.hero(block);
+    case "feature-grid":
+      return blockMap["feature-grid"](block);
+    case "cta":
+      return blockMap.cta(block);
+    case "testimonials":
+      return blockMap.testimonials(block);
+  }
+}
+
 export function BlockRenderer(
-  blocks: readonly (CmsLayoutBlock | UnknownBlock)[],
+  blocks: readonly BlockInput[],
 ): string {
   return blocks
-    .map((block) => {
-      const renderer = blockMap[block.blockType as keyof typeof blockMap] as
-        | ((block: CmsLayoutBlock) => string)
-        | undefined;
-
-      return renderer
-        ? renderer(block as CmsLayoutBlock)
-        : renderUnknownBlock(block);
-    })
+    .map((block) =>
+      isKnownBlock(block) ? renderKnownBlock(block) : renderUnknownBlock(block),
+    )
     .join("");
 }

@@ -3,10 +3,15 @@ import type {
   CmsCtaBlock,
   CmsFeatureGridBlock,
   CmsHeroBlock,
+  CmsLayoutBlock,
   CmsTestimonialsBlock,
 } from "../blocks/index.js";
 
-type BlockRenderer<TBlock> = (block: TBlock) => string;
+type BlockRendererMap = {
+  [K in CmsLayoutBlock["blockType"]]: (
+    block: Extract<CmsLayoutBlock, { blockType: K }>,
+  ) => string;
+};
 
 export const blockMap = {
   hero: (block: CmsHeroBlock) =>
@@ -39,9 +44,4 @@ export const blockMap = {
       description: block.description,
       testimonials: block.testimonials,
     }),
-} as const satisfies {
-  hero: BlockRenderer<CmsHeroBlock>;
-  "feature-grid": BlockRenderer<CmsFeatureGridBlock>;
-  cta: BlockRenderer<CmsCtaBlock>;
-  testimonials: BlockRenderer<CmsTestimonialsBlock>;
-};
+} as const satisfies BlockRendererMap;
