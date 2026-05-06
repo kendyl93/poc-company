@@ -1,6 +1,83 @@
 import { getButtonTokens, themeTokens, type ButtonVariant } from "@poc-company/theme";
 
 type StyleValue = string | number | undefined;
+type TextTone = "default" | "muted" | "eyebrow";
+type TextAlign = "left" | "center";
+type ButtonSize = "sm" | "md" | "lg";
+type ContainerWidth = "lg" | "xl" | "full";
+type HeadingLevel = 1 | 2 | 3;
+
+type TextStyleTokens = {
+  color: string;
+  fontFamily: string;
+  fontSize: string;
+  lineHeight: string;
+  fontWeight: number;
+  letterSpacing?: string;
+  textTransform?: string;
+};
+
+type ButtonSizeTokens = {
+  x: string;
+  y: string;
+  fontSize: string;
+};
+
+const textToneStyles: Record<TextTone, TextStyleTokens> = {
+  default: {
+    color: themeTokens.color.text,
+    fontFamily: themeTokens.typography.fontFamily.sans,
+    fontSize: themeTokens.typography.fontSize.base,
+    lineHeight: themeTokens.typography.lineHeight.relaxed,
+    fontWeight: themeTokens.typography.fontWeight.regular,
+  },
+  muted: {
+    color: themeTokens.color.textMuted,
+    fontFamily: themeTokens.typography.fontFamily.sans,
+    fontSize: themeTokens.typography.fontSize.base,
+    lineHeight: themeTokens.typography.lineHeight.relaxed,
+    fontWeight: themeTokens.typography.fontWeight.regular,
+  },
+  eyebrow: {
+    color: themeTokens.color.primary,
+    fontFamily: themeTokens.typography.fontFamily.mono,
+    fontSize: themeTokens.typography.fontSize.sm,
+    lineHeight: themeTokens.typography.lineHeight.tight,
+    fontWeight: themeTokens.typography.fontWeight.bold,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+  },
+};
+
+const buttonSizeTokens: Record<ButtonSize, ButtonSizeTokens> = {
+  sm: {
+    x: themeTokens.spacing["3"],
+    y: themeTokens.spacing["2"],
+    fontSize: themeTokens.typography.fontSize.sm,
+  },
+  md: {
+    x: themeTokens.spacing["4"],
+    y: themeTokens.spacing["2"],
+    fontSize: themeTokens.typography.fontSize.base,
+  },
+  lg: {
+    x: themeTokens.spacing["6"],
+    y: themeTokens.spacing["3"],
+    fontSize: themeTokens.typography.fontSize.lg,
+  },
+};
+
+const headingFontSizes: Record<HeadingLevel, string> = {
+  1: themeTokens.typography.fontSize["2xl"],
+  2: themeTokens.typography.fontSize.xl,
+  3: themeTokens.typography.fontSize.lg,
+};
+
+const containerMaxWidths: Record<ContainerWidth, string> = {
+  lg: "64rem",
+  xl: "80rem",
+  full: "none",
+};
 
 function escapeHtml(value: string): string {
   return value
@@ -45,48 +122,38 @@ function renderElement(
   return `<${tagName}${attrString ? ` ${attrString}` : ""}>${children}</${tagName}>`;
 }
 
+export function joinHtml(...parts: Array<string | undefined | false>): string {
+  return parts
+    .filter((part): part is string => typeof part === "string" && part.length > 0)
+    .join("");
+}
+
 export function textStyles(options?: {
-  tone?: "default" | "muted" | "eyebrow";
-  align?: "left" | "center";
+  tone?: TextTone;
+  align?: TextAlign;
 }): string {
   const tone = options?.tone ?? "default";
   const align = options?.align ?? "left";
+  const toneStyles = textToneStyles[tone];
 
   return styleToString({
     margin: "0",
-    color:
-      tone === "muted"
-        ? themeTokens.color.textMuted
-        : tone === "eyebrow"
-          ? themeTokens.color.primary
-          : themeTokens.color.text,
+    color: toneStyles.color,
     textAlign: align,
-    fontFamily:
-      tone === "eyebrow"
-        ? themeTokens.typography.fontFamily.mono
-        : themeTokens.typography.fontFamily.sans,
-    fontSize:
-      tone === "eyebrow"
-        ? themeTokens.typography.fontSize.sm
-        : themeTokens.typography.fontSize.base,
-    lineHeight:
-      tone === "eyebrow"
-        ? themeTokens.typography.lineHeight.tight
-        : themeTokens.typography.lineHeight.relaxed,
-    fontWeight:
-      tone === "eyebrow"
-        ? themeTokens.typography.fontWeight.bold
-        : themeTokens.typography.fontWeight.regular,
-    letterSpacing: tone === "eyebrow" ? "0.12em" : undefined,
-    textTransform: tone === "eyebrow" ? "uppercase" : undefined,
+    fontFamily: toneStyles.fontFamily,
+    fontSize: toneStyles.fontSize,
+    lineHeight: toneStyles.lineHeight,
+    fontWeight: toneStyles.fontWeight,
+    letterSpacing: toneStyles.letterSpacing,
+    textTransform: toneStyles.textTransform,
   });
 }
 
 export function renderText(
   content: string,
   options?: {
-    tone?: "default" | "muted" | "eyebrow";
-    align?: "left" | "center";
+    tone?: TextTone;
+    align?: TextAlign;
     tagName?: "p" | "span";
   },
 ): string {
@@ -103,30 +170,13 @@ export function renderAction(options: {
   label: string;
   href?: string;
   variant?: ButtonVariant;
-  size?: "sm" | "md" | "lg";
+  size?: ButtonSize;
   target?: "_blank" | "_self";
 }): string {
   const variant = options.variant ?? "primary";
   const tokens = getButtonTokens(variant);
   const size = options.size ?? "md";
-  const sizeTokens =
-    size === "sm"
-      ? {
-          x: themeTokens.spacing["3"],
-          y: themeTokens.spacing["2"],
-          fontSize: themeTokens.typography.fontSize.sm,
-        }
-      : size === "lg"
-        ? {
-            x: themeTokens.spacing["6"],
-            y: themeTokens.spacing["3"],
-            fontSize: themeTokens.typography.fontSize.lg,
-          }
-        : {
-            x: themeTokens.spacing["4"],
-            y: themeTokens.spacing["2"],
-            fontSize: themeTokens.typography.fontSize.base,
-          };
+  const sizeTokens = buttonSizeTokens[size];
 
   const content = escapeHtml(options.label);
   const sharedStyle = styleToString({
@@ -195,10 +245,10 @@ export function renderSectionShell(children: string, tone: "surface" | "muted" =
 }
 
 export function renderContainer(children: string, options?: {
-  width?: "lg" | "xl" | "full";
+  width?: ContainerWidth;
 }): string {
   const width = options?.width ?? "xl";
-  const maxWidth = width === "full" ? "none" : width === "lg" ? "64rem" : "80rem";
+  const maxWidth = containerMaxWidths[width];
 
   return renderElement(
     "div",
@@ -218,17 +268,12 @@ export function renderContainer(children: string, options?: {
 export function renderHeading(
   content: string,
   options?: {
-    level?: 1 | 2 | 3;
-    align?: "left" | "center";
+    level?: HeadingLevel;
+    align?: TextAlign;
   },
 ): string {
   const level = options?.level ?? 2;
-  const fontSize =
-    level === 1
-      ? themeTokens.typography.fontSize["2xl"]
-      : level === 2
-        ? themeTokens.typography.fontSize.xl
-        : themeTokens.typography.fontSize.lg;
+  const fontSize = headingFontSizes[level];
 
   return renderElement(
     `h${level}`,
@@ -325,4 +370,3 @@ export function renderSubheading(children: string, options?: { align?: "left" | 
     escapeHtml(children),
   );
 }
-

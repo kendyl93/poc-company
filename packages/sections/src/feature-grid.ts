@@ -5,6 +5,7 @@ import {
   renderContainer,
   renderGrid,
   renderHeading,
+  joinHtml,
   renderSubheading,
   renderText,
 } from "./render.js";
@@ -27,22 +28,20 @@ export function FeatureGrid({
   description,
   features,
 }: FeatureGridSectionProps): string {
-  const headingBlock = [
+  const headingBlock = joinHtml(
     eyebrow ? renderText(eyebrow, { tone: "eyebrow", align: "center" }) : "",
     renderHeading(title, { level: 2, align: "center" }),
     description ? renderSubheading(description, { align: "center" }) : "",
-  ]
-    .filter(Boolean)
-    .join("");
+  );
 
   const cards = renderGrid(
     features
       .map((feature) =>
         renderCard(
-          [
+          joinHtml(
             renderHeading(feature.title, { level: 3 }),
             renderSubheading(feature.description),
-          ].join(""),
+          ),
         ),
       )
       .join(""),

@@ -4,6 +4,7 @@ import {
   renderAction,
   renderContainer,
   renderHeading,
+  joinHtml,
   renderSubheading,
   renderText,
 } from "./render.js";
@@ -26,19 +27,21 @@ export function Cta({
   secondaryAction,
 }: CtaSectionProps): string {
   const actionRow = `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:${themeTokens.spacing['3']};margin-top:${themeTokens.spacing['6']}">${
-    renderAction(primaryAction)
-  }${secondaryAction ? renderAction(secondaryAction) : ""}</div>`;
+    joinHtml(
+      renderAction(primaryAction),
+      secondaryAction ? renderAction(secondaryAction) : "",
+    )
+  }</div>`;
+  const content = joinHtml(
+    eyebrow ? renderText(eyebrow, { tone: "eyebrow", align: "center" }) : "",
+    renderHeading(title, { level: 2, align: "center" }),
+    description ? renderSubheading(description, { align: "center" }) : "",
+    actionRow,
+  );
 
   return Section({
     children: renderContainer(
-      `<div style="display:grid;justify-items:center;gap:${themeTokens.spacing['4']};text-align:center">${[
-        eyebrow ? renderText(eyebrow, { tone: "eyebrow", align: "center" }) : "",
-        renderHeading(title, { level: 2, align: "center" }),
-        description ? renderSubheading(description, { align: "center" }) : "",
-        actionRow,
-      ]
-        .filter(Boolean)
-        .join("")}</div>`,
+      `<div style="display:grid;justify-items:center;gap:${themeTokens.spacing['4']};text-align:center">${content}</div>`,
     ),
   });
 }

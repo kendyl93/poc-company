@@ -4,6 +4,7 @@ import {
   renderAction,
   renderContainer,
   renderHeading,
+  joinHtml,
   renderText,
   renderSubheading,
 } from "./render.js";
@@ -30,18 +31,22 @@ export function Hero({
   primaryAction,
   secondaryAction,
 }: HeroSectionProps): string {
-  const content = [
+  const actionRow =
+    primaryAction || secondaryAction
+      ? `<div style="display:flex;flex-wrap:wrap;gap:${themeTokens.spacing['3']};margin-top:${themeTokens.spacing['6']}">${
+          joinHtml(
+            primaryAction ? renderAction(primaryAction) : "",
+            secondaryAction ? renderAction(secondaryAction) : "",
+          )
+        }</div>`
+      : "";
+
+  const content = joinHtml(
     eyebrow ? renderText(eyebrow, { tone: "eyebrow" }) : "",
     renderHeading(title, { level: 1 }),
     description ? renderSubheading(description) : "",
-    primaryAction || secondaryAction
-      ? `<div style="display:flex;flex-wrap:wrap;gap:${themeTokens.spacing['3']};margin-top:${themeTokens.spacing['6']}">${
-          primaryAction ? renderAction(primaryAction) : ""
-        }${secondaryAction ? renderAction(secondaryAction) : ""}</div>`
-      : "",
-  ]
-    .filter(Boolean)
-    .join("");
+    actionRow,
+  );
 
   return Section({
     tone: "muted",
