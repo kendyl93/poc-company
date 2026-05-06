@@ -6,6 +6,6 @@ import { createPayloadConfig, payloadConfig } from "./payload.config.js";
 export const cmsPackage = {
   ...createSharedPackageMetadata("cms"),
   mode: "headless",
-};
+} as const;
 
 export { cmsEnvironmentTemplate, pagesCollection, payloadConfig, createPayloadConfig };

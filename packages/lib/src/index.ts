@@ -1,13 +1,11 @@
 export type SharedPackageName = "ui" | "sections" | "theme" | "cms" | "lib";
 
 export type SharedPackageMetadata = {
-  name: SharedPackageName;
+  readonly name: SharedPackageName;
 };
 
-export function createSharedPackageMetadata(
-  name: SharedPackageName,
-): SharedPackageMetadata {
+export function createSharedPackageMetadata(name: SharedPackageName): SharedPackageMetadata {
   return { name };
 }
 
-export const libPackage = createSharedPackageMetadata("lib");
+export const libPackage: SharedPackageMetadata = createSharedPackageMetadata("lib");
