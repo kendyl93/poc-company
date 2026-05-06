@@ -2,51 +2,49 @@ export type CmsFieldAdmin = {
   position?: "main" | "sidebar";
 };
 
-export type CmsTextField = {
+export type CmsCollectionLabels = {
+  singular: string;
+  plural: string;
+};
+
+export type CmsFieldBase = {
   name: string;
+  admin?: CmsFieldAdmin;
+};
+
+export type CmsTextField = {
   type: "text";
   required?: boolean;
   localized?: boolean;
-  admin?: CmsFieldAdmin;
-};
+} & CmsFieldBase;
 
 export type CmsTextareaField = {
-  name: string;
   type: "textarea";
   required?: boolean;
-  admin?: CmsFieldAdmin;
-};
+} & CmsFieldBase;
 
 export type CmsSlugField = {
-  name: string;
   type: "slug";
   from: string;
   required?: boolean;
   unique?: boolean;
-  admin?: CmsFieldAdmin;
-};
+} & CmsFieldBase;
 
 export type CmsUploadField = {
-  name: string;
   type: "upload";
   relationTo: string;
   required?: boolean;
-  admin?: CmsFieldAdmin;
-};
+} & CmsFieldBase;
 
 export type CmsGroupField = {
-  name: string;
   type: "group";
   fields: readonly CmsField[];
-  admin?: CmsFieldAdmin;
-};
+} & CmsFieldBase;
 
 export type CmsBlocksField = {
-  name: string;
   type: "blocks";
   blocks: readonly CmsBlock[];
-  admin?: CmsFieldAdmin;
-};
+} & CmsFieldBase;
 
 export type CmsField =
   | CmsTextField
@@ -63,10 +61,7 @@ export type CmsBlock = {
 
 export type CmsCollection = {
   slug: string;
-  labels: {
-    singular: string;
-    plural: string;
-  };
+  labels: CmsCollectionLabels;
   timestamps: boolean;
   fields: readonly CmsField[];
 };

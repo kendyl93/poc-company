@@ -2,6 +2,10 @@ import { pagesCollection } from "./collections/pages.js";
 import { cmsEnvironmentTemplate } from "./environment.js";
 import type { CmsConfig } from "./types.js";
 
+const cmsAdminUser = "users";
+const cmsTypescriptOutputFile = "src/payload-types.ts";
+const cmsCollections = [pagesCollection] as const;
+
 export function createPayloadConfig(
   environment = cmsEnvironmentTemplate,
 ): CmsConfig {
@@ -12,12 +16,12 @@ export function createPayloadConfig(
     },
     serverURL: environment.PAYLOAD_SERVER_URL,
     admin: {
-      user: "users",
+      user: cmsAdminUser,
     },
     typescript: {
-      outputFile: "src/payload-types.ts",
+      outputFile: cmsTypescriptOutputFile,
     },
-    collections: [pagesCollection],
+    collections: cmsCollections,
   };
 }
 
