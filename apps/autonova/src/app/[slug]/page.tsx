@@ -1,3 +1,4 @@
+import React from "react";
 import { PageShell } from "../../lib/pageShell.js";
 import { createPayloadClient } from "../../lib/payloadClient.js";
 import { renderPayloadPageHtml } from "../../lib/renderPayloadPage.js";
@@ -5,7 +6,7 @@ import { renderPayloadPageHtml } from "../../lib/renderPayloadPage.js";
 const payloadClient = createPayloadClient();
 
 type SlugPageProps = {
-  params: { slug: string } | Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export default async function SlugPage({ params }: SlugPageProps) {

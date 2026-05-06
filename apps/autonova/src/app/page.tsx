@@ -1,3 +1,4 @@
+import React from "react";
 import { PageShell } from "../lib/pageShell.js";
 import { createPayloadClient } from "../lib/payloadClient.js";
 import { renderPayloadPageHtml } from "../lib/renderPayloadPage.js";
