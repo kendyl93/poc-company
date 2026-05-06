@@ -4,6 +4,14 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@poc-company/ui": ["packages/ui/src/index.ts"],
+      "@poc-company/sections": ["packages/sections/src/index.ts"],
+      "@poc-company/theme": ["packages/theme/src/index.ts"],
+      "@poc-company/cms": ["packages/cms/src/index.ts"],
+      "@poc-company/lib": ["packages/lib/src/index.ts"]
+    },
     "types": ["node"],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
