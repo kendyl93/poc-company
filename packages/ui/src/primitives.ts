@@ -32,6 +32,44 @@ export type ButtonProps = {
   fullWidth?: boolean;
 };
 
+const containerMaxWidths: Record<ContainerWidth, string> = {
+  sm: "36rem",
+  md: "48rem",
+  lg: "64rem",
+  xl: "80rem",
+  full: "none",
+};
+
+const headingFontSizes: Record<HeadingLevel, string> = {
+  1: themeTokens.typography.fontSize["2xl"],
+  2: themeTokens.typography.fontSize.xl,
+  3: themeTokens.typography.fontSize.lg,
+  4: themeTokens.typography.fontSize.lg,
+  5: themeTokens.typography.fontSize.lg,
+  6: themeTokens.typography.fontSize.lg,
+};
+
+const buttonSizeTokens: Record<
+  ButtonSize,
+  { x: string; y: string; fontSize: string }
+> = {
+  sm: {
+    x: themeTokens.spacing["3"],
+    y: themeTokens.spacing["2"],
+    fontSize: themeTokens.typography.fontSize.sm,
+  },
+  md: {
+    x: themeTokens.spacing["4"],
+    y: themeTokens.spacing["2"],
+    fontSize: themeTokens.typography.fontSize.base,
+  },
+  lg: {
+    x: themeTokens.spacing["6"],
+    y: themeTokens.spacing["3"],
+    fontSize: themeTokens.typography.fontSize.lg,
+  },
+};
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -65,29 +103,15 @@ function renderElement(
 }
 
 function widthToMaxWidth(width: ContainerWidth): string {
-  switch (width) {
-    case "sm":
-      return "36rem";
-    case "md":
-      return "48rem";
-    case "lg":
-      return "64rem";
-    case "xl":
-      return "80rem";
-    case "full":
-      return "none";
-  }
+  return containerMaxWidths[width];
 }
 
 function sizeToPadding(size: ButtonSize): { x: string; y: string; fontSize: string } {
-  switch (size) {
-    case "sm":
-      return { x: themeTokens.spacing["3"], y: themeTokens.spacing["2"], fontSize: themeTokens.typography.fontSize.sm };
-    case "md":
-      return { x: themeTokens.spacing["4"], y: themeTokens.spacing["2"], fontSize: themeTokens.typography.fontSize.base };
-    case "lg":
-      return { x: themeTokens.spacing["6"], y: themeTokens.spacing["3"], fontSize: themeTokens.typography.fontSize.lg };
-  }
+  return buttonSizeTokens[size];
+}
+
+function headingFontSize(level: HeadingLevel): string {
+  return headingFontSizes[level];
 }
 
 export function Container({
@@ -136,7 +160,6 @@ export function Heading({
   tone = "default",
 }: HeadingProps): string {
   const color = tone === "muted" ? themeTokens.color.textMuted : themeTokens.color.text;
-  const fontSize = level === 1 ? themeTokens.typography.fontSize["2xl"] : level === 2 ? themeTokens.typography.fontSize.xl : themeTokens.typography.fontSize.lg;
 
   return renderElement(
     `h${level}`,
@@ -146,7 +169,7 @@ export function Heading({
         margin: "0",
         color,
         fontFamily: themeTokens.typography.fontFamily.display,
-        fontSize,
+        fontSize: headingFontSize(level),
         lineHeight: themeTokens.typography.lineHeight.tight,
         fontWeight: themeTokens.typography.fontWeight.bold,
       }),

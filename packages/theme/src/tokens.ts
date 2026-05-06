@@ -160,6 +160,6 @@ export const themeTokens = {
   },
 } as const satisfies ThemeTokens;
 
-export function getButtonTokens(variant: ButtonVariant) {
+export function getButtonTokens(variant: ButtonVariant): ThemeButtonVariantTokens {
   return themeTokens.button[variant];
 }
