@@ -1,4 +1,5 @@
 node_modules/
 dist/
+apps/*/.next/
 npm-debug.log*
 *.tsbuildinfo
