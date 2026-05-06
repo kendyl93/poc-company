@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { BlockRenderer } from "@poc-company/cms";
 import { createPayloadClient } from "./payloadClient.js";
+import { autonovaHomepageSeed } from "./homepageSeed.js";
 import { renderPayloadPageHtml } from "./renderPayloadPage.js";
 
 type FetchLike = (input: string | URL | Request, init?: RequestInit) => Promise<Response>;
@@ -10,28 +11,7 @@ describe("@poc-company/autonova page integration", () => {
     const fetchImpl = vi.fn<FetchLike>(async () => {
       return new Response(
         JSON.stringify({
-          docs: [
-            {
-              slug: "home",
-              title: "Launch from Payload",
-              layout: [
-                {
-                  blockType: "hero",
-                  eyebrow: "Autonova",
-                  title: "Launch from Payload",
-                  description: "Typed blocks flow into the app shell.",
-                },
-                {
-                  blockType: "cta",
-                  title: "Start building",
-                  primaryAction: {
-                    label: "Open the workspace",
-                    href: "/docs",
-                  },
-                },
-              ],
-            },
-          ],
+          docs: [autonovaHomepageSeed],
         }),
         {
           status: 200,
@@ -51,26 +31,7 @@ describe("@poc-company/autonova page integration", () => {
       throw new Error("Expected a page to be returned");
     }
 
-    expect(page).toEqual({
-      slug: "home",
-      title: "Launch from Payload",
-      layout: [
-        {
-          blockType: "hero",
-          eyebrow: "Autonova",
-          title: "Launch from Payload",
-          description: "Typed blocks flow into the app shell.",
-        },
-        {
-          blockType: "cta",
-          title: "Start building",
-          primaryAction: {
-            label: "Open the workspace",
-            href: "/docs",
-          },
-        },
-      ],
-    });
+    expect(page).toEqual(autonovaHomepageSeed);
 
     expect(fetchImpl).toHaveBeenCalledTimes(1);
     const [request] = fetchImpl.mock.calls[0];
@@ -83,8 +44,10 @@ describe("@poc-company/autonova page integration", () => {
 
     const html = renderPayloadPageHtml(page, "home");
 
-    expect(html).toContain("Launch from Payload");
-    expect(html).toContain("Open the workspace");
+    expect(html).toContain("Launch AutoNova from a seeded Payload homepage");
+    expect(html).toContain("Open the CMS");
+    expect(html).toContain("The homepage is content-driven");
+    expect(html).toContain("The demo is seeded, rendered, and ready for review.");
     expect(html).toContain(BlockRenderer(page.layout));
   });
 

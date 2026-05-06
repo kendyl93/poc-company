@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --config ../../vitest.config.ts src/lib/app.test.ts src/lib/page.test.ts"
+    "test": "vitest run --config ../../vitest.config.ts src/lib/app.test.ts src/lib/page.test.ts src/lib/page.smoke.test.tsx src/lib/pageShell.test.tsx"
   },
   "dependencies": {
     "@poc-company/lib": "1.0.0",

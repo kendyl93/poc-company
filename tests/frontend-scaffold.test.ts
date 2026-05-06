@@ -70,6 +70,12 @@ describe("frontend scaffold", () => {
       existsSync(new URL("apps/autonova/src/lib/payloadClient.ts", repositoryRoot)),
     ).toBe(true);
     expect(
+      existsSync(new URL("apps/autonova/src/lib/homepageSeed.ts", repositoryRoot)),
+    ).toBe(true);
+    expect(
+      existsSync(new URL("apps/autonova/src/lib/page.smoke.test.tsx", repositoryRoot)),
+    ).toBe(true);
+    expect(
       existsSync(new URL("apps/autonova/src/app/globals.css", repositoryRoot)),
     ).toBe(true);
   });
