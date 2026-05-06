@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "typecheck": "npm run -ws --if-present typecheck && tsc --noEmit -p tsconfig.json",
-    "test": "npm run -ws --if-present test && vitest run --config vitest.config.ts tests/root-foundation.test.ts tests/shared-scaffolding.test.ts",
+    "test": "npm run -ws --if-present test && vitest run --config vitest.config.ts tests/root-foundation.test.ts tests/shared-scaffolding.test.ts tests/documentation-foundation.test.ts",
     "sandcastle": "npx tsx .sandcastle/main.mts"
   },
   "devDependencies": {

@@ -7,10 +7,12 @@
     "@poc-company/lib": "1.0.0"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./payload.config": "./src/payload.config.ts",
+    "./collections/pages": "./src/collections/pages.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --config ../../vitest.config.ts src/index.test.ts"
+    "test": "vitest run --config ../../vitest.config.ts src/index.test.ts src/payload.config.test.ts"
   }
 }
