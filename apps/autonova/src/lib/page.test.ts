@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import { BlockRenderer } from "@poc-company/cms";
-import {
-  createPayloadClient,
-  renderPayloadPageHtml,
-} from "./payloadClient.js";
+import { createPayloadClient } from "./payloadClient.js";
+import { renderPayloadPageHtml } from "./renderPayloadPage.js";
+
+type FetchLike = (input: string | URL | Request, init?: RequestInit) => Promise<Response>;
 
 describe("@poc-company/autonova page integration", () => {
   it("loads Payload pages by slug and renders their dynamic blocks", async () => {
-    const fetchImpl = vi.fn(async () => {
+    const fetchImpl = vi.fn<FetchLike>(async () => {
       return new Response(
         JSON.stringify({
           docs: [
@@ -47,6 +47,9 @@ describe("@poc-company/autonova page integration", () => {
       fetchImpl,
     });
     const page = await client.fetchPageBySlug("home");
+    if (!page) {
+      throw new Error("Expected a page to be returned");
+    }
 
     expect(page).toEqual({
       slug: "home",
@@ -70,10 +73,7 @@ describe("@poc-company/autonova page integration", () => {
     });
 
     expect(fetchImpl).toHaveBeenCalledTimes(1);
-    const [request] = fetchImpl.mock.calls[0] as unknown as [
-      string | URL | Request,
-      RequestInit?,
-    ];
+    const [request] = fetchImpl.mock.calls[0];
     const requestUrl = new URL(String(request));
     expect(requestUrl.origin).toBe("https://cms.example.com");
     expect(requestUrl.pathname).toBe("/api/pages");
@@ -85,7 +85,7 @@ describe("@poc-company/autonova page integration", () => {
 
     expect(html).toContain("Launch from Payload");
     expect(html).toContain("Open the workspace");
-    expect(html).toContain(BlockRenderer(page?.layout ?? []));
+    expect(html).toContain(BlockRenderer(page.layout));
   });
 
   it("renders a graceful fallback when Payload returns no page", () => {

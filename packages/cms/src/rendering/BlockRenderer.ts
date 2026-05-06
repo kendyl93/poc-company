@@ -28,21 +28,11 @@ function isKnownBlock(block: BlockInput): block is CmsLayoutBlock {
 }
 
 function renderKnownBlock(block: CmsLayoutBlock): string {
-  switch (block.blockType) {
-    case "hero":
-      return blockMap.hero(block);
-    case "feature-grid":
-      return blockMap["feature-grid"](block);
-    case "cta":
-      return blockMap.cta(block);
-    case "testimonials":
-      return blockMap.testimonials(block);
-  }
+  const renderer = blockMap[block.blockType as keyof typeof blockMap];
+  return renderer(block as never);
 }
 
-export function BlockRenderer(
-  blocks: readonly BlockInput[],
-): string {
+export function BlockRenderer(blocks: readonly BlockInput[]): string {
   return blocks
     .map((block) =>
       isKnownBlock(block) ? renderKnownBlock(block) : renderUnknownBlock(block),
