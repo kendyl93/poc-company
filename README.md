@@ -14,3 +14,8 @@ npm run test
 
 - `apps/` for client applications
 - `packages/` for shared packages
+
+## Documentation
+
+- [Coding standards](./.sandcastle/CODING_STANDARDS.md)
+- [Architecture ADR](./docs/adr/0001-block-driven-multi-client-architecture.md)
