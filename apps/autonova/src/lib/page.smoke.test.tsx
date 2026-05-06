@@ -1,8 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { autonovaHomepageSeed } from "./homepageSeed.js";
-
-type FetchLike = (input: string | URL | Request, init?: RequestInit) => Promise<Response>;
+import { createPayloadListResponse, type FetchLike } from "./payloadTestResponse.js";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -11,19 +10,7 @@ afterEach(() => {
 
 describe("@poc-company/autonova homepage smoke", () => {
   it("renders the seeded homepage through the actual Next.js route", async () => {
-    const fetchImpl = vi.fn<FetchLike>(async () => {
-      return new Response(
-        JSON.stringify({
-          docs: [autonovaHomepageSeed],
-        }),
-        {
-          status: 200,
-          headers: {
-            "content-type": "application/json",
-          },
-        },
-      );
-    });
+    const fetchImpl = vi.fn<FetchLike>(async () => createPayloadListResponse([autonovaHomepageSeed]));
 
     vi.stubGlobal("fetch", fetchImpl);
 

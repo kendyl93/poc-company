@@ -2,25 +2,12 @@ import { describe, expect, it, vi } from "vitest";
 import { BlockRenderer } from "@poc-company/cms";
 import { createPayloadClient } from "./payloadClient.js";
 import { autonovaHomepageSeed } from "./homepageSeed.js";
+import { createPayloadListResponse, type FetchLike } from "./payloadTestResponse.js";
 import { renderPayloadPageHtml } from "./renderPayloadPage.js";
-
-type FetchLike = (input: string | URL | Request, init?: RequestInit) => Promise<Response>;
 
 describe("@poc-company/autonova page integration", () => {
   it("loads Payload pages by slug and renders their dynamic blocks", async () => {
-    const fetchImpl = vi.fn<FetchLike>(async () => {
-      return new Response(
-        JSON.stringify({
-          docs: [autonovaHomepageSeed],
-        }),
-        {
-          status: 200,
-          headers: {
-            "content-type": "application/json",
-          },
-        },
-      );
-    });
+    const fetchImpl = vi.fn<FetchLike>(async () => createPayloadListResponse([autonovaHomepageSeed]));
 
     const client = createPayloadClient({
       baseUrl: "https://cms.example.com",

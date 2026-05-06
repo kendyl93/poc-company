@@ -14,7 +14,12 @@ export default defineConfig({
     alias: packageAliases,
   },
   test: {
-    include: ["tests/**/*.test.ts", "tests/**/*.test.tsx", "**/src/**/*.test.ts", "**/src/**/*.test.tsx"],
+    include: [
+      "tests/**/*.test.ts",
+      "tests/**/*.test.tsx",
+      "**/src/**/*.test.ts",
+      "**/src/**/*.test.tsx",
+    ],
     environment: "node",
   },
 });
