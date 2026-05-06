@@ -1,0 +1,17 @@
+{
+  "name": "@poc-company/ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@poc-company/lib": "1.0.0",
+    "@poc-company/theme": "1.0.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --config ../../vitest.config.ts src/index.test.ts"
+  }
+}
