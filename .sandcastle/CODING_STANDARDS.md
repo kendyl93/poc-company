@@ -28,7 +28,6 @@ These are hard review rules for this repository. If implementation conflicts wit
 - Keep client-specific code in `apps/<client>`.
 - Shared packages must not import from `apps/<client>`.
 - Dependency direction must stay one-way: `apps` can depend on `packages`, but `packages` must never depend on `apps`.
-- In plain terms, apps can depend on packages.
 - Do not hardcode client copy or brand-specific values inside shared components.
 - Shared components must receive content through props.
 - Prefer configuration, variants, and theme tokens over creating per-client component copies.
