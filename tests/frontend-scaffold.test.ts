@@ -11,6 +11,12 @@ type PackageJson = {
 };
 
 const repositoryRoot = new URL("..", import.meta.url);
+const expectedSharedPackages = {
+  ui: "ui",
+  sections: "sections",
+  theme: "theme",
+  lib: "lib",
+} as const;
 
 function readJson<T>(relativePath: string): T {
   return JSON.parse(
@@ -44,12 +50,7 @@ describe("frontend scaffold", () => {
 
     expect(autonovaApp).toEqual({
       name: "autonova",
-      sharedPackages: {
-        ui: "ui",
-        sections: "sections",
-        theme: "theme",
-        lib: "lib",
-      },
+      sharedPackages: expectedSharedPackages,
     });
 
     expect(existsSync(new URL("apps/autonova/next.config.mjs", repositoryRoot)))

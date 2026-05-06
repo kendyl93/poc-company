@@ -1,10 +1,12 @@
 import { autonovaApp } from "../lib/app.js";
 
+const sharedPackages = autonovaApp.sharedPackages;
 const highlightLabels = [
-  autonovaApp.sharedPackages.ui,
-  autonovaApp.sharedPackages.sections,
-  autonovaApp.sharedPackages.theme,
+  sharedPackages.ui,
+  sharedPackages.sections,
+  sharedPackages.theme,
 ];
+const sharedPackageEntries = Object.entries(sharedPackages);
 
 export default function HomePage() {
   return (
@@ -33,7 +35,7 @@ export default function HomePage() {
           </div>
         </section>
         <section className="grid gap-4 sm:grid-cols-3">
-          {Object.entries(autonovaApp.sharedPackages).map(([key, value]) => (
+          {sharedPackageEntries.map(([key, value]) => (
             <div
               key={key}
               className="rounded-3xl border border-white/10 bg-slate-950/70 p-5"

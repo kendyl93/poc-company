@@ -1,10 +1,11 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata = {
   title: "AutoNova",
   description: "Workspace-wired Next.js scaffold for the AutoNova client.",
-};
+} satisfies Metadata;
 
 type RootLayoutProps = {
   children: ReactNode;
