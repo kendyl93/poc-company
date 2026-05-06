@@ -42,6 +42,7 @@ describe("frontend scaffold", () => {
         react: expect.any(String),
         "react-dom": expect.any(String),
         "@poc-company/ui": "1.0.0",
+        "@poc-company/cms": "1.0.0",
         "@poc-company/sections": "1.0.0",
         "@poc-company/theme": "1.0.0",
         "@poc-company/lib": "1.0.0",
@@ -62,6 +63,12 @@ describe("frontend scaffold", () => {
       .toBe(true);
     expect(existsSync(new URL("apps/autonova/src/app/page.tsx", repositoryRoot)))
       .toBe(true);
+    expect(
+      existsSync(new URL("apps/autonova/src/app/[slug]/page.tsx", repositoryRoot)),
+    ).toBe(true);
+    expect(
+      existsSync(new URL("apps/autonova/src/lib/payloadClient.ts", repositoryRoot)),
+    ).toBe(true);
     expect(
       existsSync(new URL("apps/autonova/src/app/globals.css", repositoryRoot)),
     ).toBe(true);

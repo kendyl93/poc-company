@@ -8,10 +8,11 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --config ../../vitest.config.ts src/lib/app.test.ts"
+    "test": "vitest run --config ../../vitest.config.ts src/lib/app.test.ts src/lib/page.test.ts"
   },
   "dependencies": {
     "@poc-company/lib": "1.0.0",
+    "@poc-company/cms": "1.0.0",
     "@poc-company/sections": "1.0.0",
     "@poc-company/theme": "1.0.0",
     "@poc-company/ui": "1.0.0",
