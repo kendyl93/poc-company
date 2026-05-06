@@ -1,13 +1,13 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
+import { sharedPackageNames } from "./workspace-packages.js";
 
-const packageAliases = {
-  "@poc-company/ui": fileURLToPath(new URL("./packages/ui/src/index.ts", import.meta.url)),
-  "@poc-company/sections": fileURLToPath(new URL("./packages/sections/src/index.ts", import.meta.url)),
-  "@poc-company/theme": fileURLToPath(new URL("./packages/theme/src/index.ts", import.meta.url)),
-  "@poc-company/cms": fileURLToPath(new URL("./packages/cms/src/index.ts", import.meta.url)),
-  "@poc-company/lib": fileURLToPath(new URL("./packages/lib/src/index.ts", import.meta.url)),
-};
+const packageAliases = Object.fromEntries(
+  sharedPackageNames.map((name) => [
+    `@poc-company/${name}`,
+    fileURLToPath(new URL(`./packages/${name}/src/index.ts`, import.meta.url)),
+  ]),
+);
 
 export default defineConfig({
   resolve: {
