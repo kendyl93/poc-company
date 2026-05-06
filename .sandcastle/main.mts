@@ -22,7 +22,7 @@
 //   "scripts": { "sandcastle": "npx tsx .sandcastle/main.mts" }
 
 import * as sandcastle from "@ai-hero/sandcastle";
-import { docker } from "@ai-hero/sandcastle/sandboxes/docker";
+import { podman } from "@ai-hero/sandcastle/sandboxes/podman";
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -61,7 +61,7 @@ for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
   // -------------------------------------------------------------------------
   const plan = await sandcastle.run({
     hooks,
-    sandbox: docker(),
+    sandbox: podman(),
     name: "planner",
     // One iteration is enough: the planner just needs to read and reason,
     // not write code.
@@ -111,7 +111,7 @@ for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
     issues.map(async (issue) => {
       const sandbox = await sandcastle.createSandbox({
         branch: issue.branch,
-        sandbox: docker(),
+        sandbox: podman(),
         hooks,
         copyToWorktree,
       });
@@ -203,7 +203,7 @@ for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
   // -------------------------------------------------------------------------
   await sandcastle.run({
     hooks,
-    sandbox: docker(),
+    sandbox: podman(),
     name: "merger",
     maxIterations: 1,
     agent: sandcastle.codex("gpt-5.4-mini"),
@@ -212,9 +212,7 @@ for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
       // A markdown list of branch names, one per line.
       BRANCHES: completedBranches.map((b) => `- ${b}`).join("\n"),
       // A markdown list of issue IDs and titles, one per line.
-      ISSUES: completedIssues
-        .map((i) => `- ${i.id}: ${i.title}`)
-        .join("\n"),
+      ISSUES: completedIssues.map((i) => `- ${i.id}: ${i.title}`).join("\n"),
     },
   });
 
