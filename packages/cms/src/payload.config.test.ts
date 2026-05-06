@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  cmsBlocks,
   cmsEnvironmentTemplate,
   pagesCollection,
   payloadConfig,
@@ -41,7 +42,7 @@ describe("@poc-company/cms payload scaffold", () => {
       expect.objectContaining({
         name: "layout",
         type: "blocks",
-        blocks: [],
+        blocks: cmsBlocks,
       }),
     ]);
   });

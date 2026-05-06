@@ -4,15 +4,19 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@poc-company/lib": "1.0.0"
+    "@poc-company/lib": "1.0.0",
+    "@poc-company/sections": "1.0.0"
   },
   "exports": {
     ".": "./src/index.ts",
     "./payload.config": "./src/payload.config.ts",
-    "./collections/pages": "./src/collections/pages.ts"
+    "./collections/pages": "./src/collections/pages.ts",
+    "./blocks": "./src/blocks/index.ts",
+    "./rendering/BlockRenderer": "./src/rendering/BlockRenderer.ts",
+    "./rendering/blockMap": "./src/rendering/blockMap.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run --config ../../vitest.config.ts src/index.test.ts src/payload.config.test.ts"
+    "test": "vitest run --config ../../vitest.config.ts src/index.test.ts src/payload.config.test.ts src/rendering/BlockRenderer.test.ts"
   }
 }

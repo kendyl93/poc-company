@@ -36,14 +36,33 @@ export type CmsUploadField = {
   required?: boolean;
 } & CmsFieldBase;
 
+export type CmsSelectField = {
+  type: "select";
+  options: readonly {
+    label: string;
+    value: string;
+  }[];
+  required?: boolean;
+} & CmsFieldBase;
+
 export type CmsGroupField = {
   type: "group";
   fields: readonly CmsField[];
+  required?: boolean;
+} & CmsFieldBase;
+
+export type CmsArrayField = {
+  type: "array";
+  fields: readonly CmsField[];
+  minRows?: number;
+  maxRows?: number;
+  required?: boolean;
 } & CmsFieldBase;
 
 export type CmsBlocksField = {
   type: "blocks";
   blocks: readonly CmsBlock[];
+  required?: boolean;
 } & CmsFieldBase;
 
 export type CmsField =
@@ -51,7 +70,9 @@ export type CmsField =
   | CmsTextareaField
   | CmsSlugField
   | CmsUploadField
+  | CmsSelectField
   | CmsGroupField
+  | CmsArrayField
   | CmsBlocksField;
 
 export type CmsBlock = {

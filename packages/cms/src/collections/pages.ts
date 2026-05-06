@@ -1,3 +1,4 @@
+import { cmsBlocks } from "../blocks/index.js";
 import type { CmsCollection } from "../types.js";
 
 const pageSeoFields = [
@@ -53,7 +54,7 @@ export const pagesCollection = {
     {
       name: "layout",
       type: "blocks",
-      blocks: [],
+      blocks: cmsBlocks,
     },
   ],
 } as const satisfies CmsCollection;
