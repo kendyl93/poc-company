@@ -10,6 +10,11 @@
       "@poc-company/sections": ["packages/sections/src/index.ts"],
       "@poc-company/theme": ["packages/theme/src/index.ts"],
       "@poc-company/cms": ["packages/cms/src/index.ts"],
+      "@poc-company/cms/blocks": ["packages/cms/src/blocks/index.ts"],
+      "@poc-company/cms/rendering/BlockRenderer": [
+        "packages/cms/src/rendering/BlockRenderer.ts"
+      ],
+      "@payload-config": ["packages/cms/payload.config.ts"],
       "@poc-company/lib": ["packages/lib/src/index.ts"]
     },
     "types": ["node"],

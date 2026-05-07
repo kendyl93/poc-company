@@ -21,7 +21,7 @@ const pageSeoFields = [
       position: "sidebar",
     },
   },
-] as const;
+] satisfies NonNullable<CmsCollection["fields"]>;
 
 export const pagesCollection = {
   slug: "pages",
@@ -29,8 +29,26 @@ export const pagesCollection = {
     singular: "Page",
     plural: "Pages",
   },
+  admin: {
+    useAsTitle: "title",
+    defaultColumns: ["title", "site", "slug", "updatedAt"],
+  },
+  access: {
+    read: () => true,
+  },
   timestamps: true,
   fields: [
+    {
+      name: "site",
+      type: "text",
+      required: true,
+      index: true,
+      admin: {
+        position: "sidebar",
+        description:
+          "Client site key, for example autonova. Frontend apps use this to fetch only their own content.",
+      },
+    },
     {
       name: "title",
       type: "text",
@@ -38,10 +56,9 @@ export const pagesCollection = {
     },
     {
       name: "slug",
-      type: "slug",
-      from: "title",
+      type: "text",
       required: true,
-      unique: true,
+      index: true,
       admin: {
         position: "sidebar",
       },
@@ -55,6 +72,7 @@ export const pagesCollection = {
       name: "layout",
       type: "blocks",
       blocks: cmsBlocks,
+      required: true,
     },
   ],
-} as const satisfies CmsCollection;
+} satisfies CmsCollection;

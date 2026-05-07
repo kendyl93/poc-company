@@ -2,6 +2,7 @@ import { ctaBlock } from "./cta.js";
 import { featureGridBlock } from "./feature-grid.js";
 import { heroBlock } from "./hero.js";
 import { testimonialsBlock } from "./testimonials.js";
+import type { CmsBlock } from "../types.js";
 
 export { ctaBlock } from "./cta.js";
 export { featureGridBlock } from "./feature-grid.js";
@@ -29,4 +30,4 @@ export const cmsBlocks = [
   featureGridBlock,
   ctaBlock,
   testimonialsBlock,
-] as const;
+] satisfies CmsBlock[];

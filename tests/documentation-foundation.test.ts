@@ -30,16 +30,19 @@ describe("documentation foundation", () => {
     expect(readme).toContain(adrPath);
   });
 
-  it("documents the CMS scaffold and its environment template", () => {
+  it("documents the runnable CMS and its environment template", () => {
     const readme = readText(readmePath);
     const envExample = readText(".env.example");
 
-    expect(readme).toContain("CMS scaffold");
+    expect(readme).toContain("## CMS");
+    expect(readme).toContain("npm run dev -w @poc-company/cms");
+    expect(readme).toContain("http://localhost:3001/admin");
     expect(readme).toContain("packages/cms/src/payload.config.ts");
     expect(readme).toContain("packages/cms/src/collections/pages.ts");
     expect(envExample).toContain("PAYLOAD_SECRET");
     expect(envExample).toContain("DATABASE_URL");
     expect(envExample).toContain("PAYLOAD_SERVER_URL");
+    expect(envExample).toContain("PAYLOAD_SITE");
   });
 
   it("documents the block-driven monorepo architecture in the ADR", () => {

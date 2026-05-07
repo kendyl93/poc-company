@@ -1,4 +1,4 @@
-import { BlockRenderer } from "@poc-company/cms";
+import { BlockRenderer } from "@poc-company/cms/rendering/BlockRenderer";
 import type { PayloadPage } from "./payloadClient.js";
 
 function escapeHtml(value: string): string {

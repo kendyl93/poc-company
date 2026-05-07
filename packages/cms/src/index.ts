@@ -1,7 +1,9 @@
 import { createSharedPackageMetadata } from "@poc-company/lib";
 export { cmsBlocks } from "./blocks/index.js";
 export type { CmsLayoutBlock } from "./blocks/index.js";
+export { mediaCollection } from "./collections/media.js";
 export { pagesCollection } from "./collections/pages.js";
+export { usersCollection } from "./collections/users.js";
 export { cmsEnvironmentTemplate } from "./environment.js";
 export { createPayloadConfig, payloadConfig } from "./payload.config.js";
 export { blockMap } from "./rendering/blockMap.js";

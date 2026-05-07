@@ -1,4 +1,4 @@
-import type { CmsLayoutBlock } from "@poc-company/cms";
+import type { CmsLayoutBlock } from "@poc-company/cms/blocks";
 
 type FetchLike = (input: string | URL | Request, init?: RequestInit) => Promise<Response>;
 
@@ -9,6 +9,7 @@ type PayloadListResponse = {
 type PayloadBlock = CmsLayoutBlock | { blockType: string; [key: string]: unknown };
 
 export type PayloadPage = {
+  site?: string;
   slug: string;
   title: string;
   layout: readonly PayloadBlock[];
@@ -18,6 +19,7 @@ type PayloadClientOptions = {
   baseUrl?: string;
   collection?: string;
   fetchImpl?: FetchLike;
+  site?: string;
 };
 
 type PayloadClient = {
@@ -25,7 +27,8 @@ type PayloadClient = {
 };
 
 const defaultBaseUrl =
-  process.env.PAYLOAD_SERVER_URL ?? process.env.PAYLOAD_URL ?? "http://127.0.0.1:3000";
+  process.env.PAYLOAD_SERVER_URL ?? process.env.PAYLOAD_URL ?? "http://127.0.0.1:3001";
+const defaultSite = process.env.PAYLOAD_SITE ?? "autonova";
 
 function isPayloadBlock(value: unknown): value is PayloadBlock {
   return Boolean(
@@ -50,6 +53,7 @@ function normalizePageDocument(value: unknown): PayloadPage | null {
   }
 
   const doc = value as {
+    site?: unknown;
     slug?: unknown;
     title?: unknown;
     layout?: unknown;
@@ -60,6 +64,7 @@ function normalizePageDocument(value: unknown): PayloadPage | null {
   }
 
   return {
+    ...(typeof doc.site === "string" ? { site: doc.site } : {}),
     slug: doc.slug,
     title: doc.title,
     layout: normalizeBlocks(doc.layout),
@@ -70,10 +75,12 @@ export function createPayloadClient(options: PayloadClientOptions = {}): Payload
   const baseUrl = options.baseUrl ?? defaultBaseUrl;
   const collection = options.collection ?? "pages";
   const fetchImpl = options.fetchImpl ?? fetch;
+  const site = options.site ?? defaultSite;
 
   return {
     async fetchPageBySlug(slug: string) {
       const url = new URL(`/api/${collection}`, baseUrl);
+      url.searchParams.set("where[site][equals]", site);
       url.searchParams.set("where[slug][equals]", slug);
       url.searchParams.set("limit", "1");
       url.searchParams.set("depth", "1");

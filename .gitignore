@@ -1,5 +1,7 @@
 node_modules/
 dist/
 apps/*/.next/
+packages/*/.next/
+packages/*/payload.db*
 npm-debug.log*
 *.tsbuildinfo

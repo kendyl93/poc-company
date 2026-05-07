@@ -70,7 +70,7 @@ export type CmsLayoutBlock =
   | CmsCtaBlock
   | CmsTestimonialsBlock;
 
-export function createActionFields(): readonly CmsField[] {
+export function createActionFields(): CmsField[] {
   return [
     {
       name: "label",
@@ -98,10 +98,10 @@ export function createActionFields(): readonly CmsField[] {
         { label: "New tab", value: "_blank" },
       ],
     } satisfies CmsSelectField,
-  ] as const;
+  ];
 }
 
-export function createFeatureItemFields(): readonly CmsField[] {
+export function createFeatureItemFields(): CmsField[] {
   return [
     {
       name: "title",
@@ -113,10 +113,10 @@ export function createFeatureItemFields(): readonly CmsField[] {
       type: "textarea",
       required: true,
     } satisfies CmsTextareaField,
-  ] as const;
+  ];
 }
 
-export function createTestimonialItemFields(): readonly CmsField[] {
+export function createTestimonialItemFields(): CmsField[] {
   return [
     {
       name: "quote",
@@ -136,7 +136,7 @@ export function createTestimonialItemFields(): readonly CmsField[] {
       name: "company",
       type: "text",
     } satisfies CmsTextField,
-  ] as const;
+  ];
 }
 
 export function createFeatureListField(name: string): CmsArrayField {

@@ -1,6 +1,49 @@
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2022"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "paths": {
+      "@payload-config": [
+        "./payload.config.ts"
+      ],
+      "@poc-company/lib": [
+        "../../packages/lib/src/index.ts"
+      ],
+      "@poc-company/sections": [
+        "../../packages/sections/src/index.ts"
+      ],
+      "@poc-company/theme": [
+        "../../packages/theme/src/index.ts"
+      ],
+      "@poc-company/ui": [
+        "../../packages/ui/src/index.ts"
+      ]
+    },
+    "allowJs": true,
+    "incremental": true
+  },
   "include": [
-    "src/**/*.ts"
+    "next-env.d.ts",
+    "payload.config.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

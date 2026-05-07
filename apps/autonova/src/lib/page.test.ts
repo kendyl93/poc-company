@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { BlockRenderer } from "@poc-company/cms";
+import { BlockRenderer } from "@poc-company/cms/rendering/BlockRenderer";
 import { createPayloadClient } from "./payloadClient.js";
 import { autonovaHomepageSeed } from "./homepageSeed.js";
 import { createPayloadListResponse, type FetchLike } from "./payloadTestResponse.js";
@@ -25,6 +25,7 @@ describe("@poc-company/autonova page integration", () => {
     const requestUrl = new URL(String(request));
     expect(requestUrl.origin).toBe("https://cms.example.com");
     expect(requestUrl.pathname).toBe("/api/pages");
+    expect(requestUrl.searchParams.get("where[site][equals]")).toBe("autonova");
     expect(requestUrl.searchParams.get("where[slug][equals]")).toBe("home");
     expect(requestUrl.searchParams.get("limit")).toBe("1");
     expect(requestUrl.searchParams.get("depth")).toBe("1");

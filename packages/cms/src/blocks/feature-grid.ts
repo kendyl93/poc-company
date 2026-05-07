@@ -19,4 +19,4 @@ export const featureGridBlock = {
     },
     createFeatureListField("features"),
   ],
-} as const satisfies CmsBlock;
+} satisfies CmsBlock;

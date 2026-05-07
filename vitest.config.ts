@@ -11,7 +11,18 @@ const packageAliases = Object.fromEntries(
 
 export default defineConfig({
   resolve: {
-    alias: packageAliases,
+    alias: {
+      "@poc-company/cms/blocks": fileURLToPath(
+        new URL("./packages/cms/src/blocks/index.ts", import.meta.url),
+      ),
+      "@poc-company/cms/rendering/BlockRenderer": fileURLToPath(
+        new URL(
+          "./packages/cms/src/rendering/BlockRenderer.ts",
+          import.meta.url,
+        ),
+      ),
+      ...packageAliases,
+    },
   },
   test: {
     include: [

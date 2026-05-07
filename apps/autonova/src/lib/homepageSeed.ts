@@ -1,6 +1,7 @@
 import type { PayloadPage } from "./payloadClient.js";
 
 export const autonovaHomepageSeed = {
+  site: "autonova",
   slug: "home",
   title: "Autonova launches from Payload",
   layout: [
@@ -12,7 +13,7 @@ export const autonovaHomepageSeed = {
         "The first demo proves the app renders real CMS content instead of a hardcoded landing page.",
       primaryAction: {
         label: "Open the CMS",
-        href: "/admin",
+        href: "http://localhost:3001/admin",
       },
       secondaryAction: {
         label: "Review the architecture",
@@ -74,7 +75,7 @@ export const autonovaHomepageSeed = {
       },
       secondaryAction: {
         label: "Open the collection",
-        href: "/admin/collections/pages",
+        href: "http://localhost:3001/admin/collections/pages",
         variant: "ghost",
       },
     },

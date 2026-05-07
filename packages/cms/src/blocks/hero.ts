@@ -20,4 +20,4 @@ export const heroBlock = {
     createActionGroupField("primaryAction"),
     createActionGroupField("secondaryAction"),
   ],
-} as const satisfies CmsBlock;
+} satisfies CmsBlock;

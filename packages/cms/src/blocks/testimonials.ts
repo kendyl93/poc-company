@@ -19,4 +19,4 @@ export const testimonialsBlock = {
     },
     createTestimonialListField("testimonials"),
   ],
-} as const satisfies CmsBlock;
+} satisfies CmsBlock;
